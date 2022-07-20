@@ -17,6 +17,47 @@ Route::get('/', function () {
     return view('posts');
 });
 
-Route::get('post', function () {
-    return view('post');
+///* Method 1, baby steps ///
+// Route::get('post', function () {
+//     return view('post', [ //? (Allows key-value pairs)      
+//         'post' => '<h1>Hello World!</h1>' // @param $post
+//     ]);
+// });
+
+///* Method 2, still hard-coded ///
+// Route::get('post', function () {
+//     return view('post', [             
+//         'post' => file_get_contents(__DIR__ . '/../resources/posts/my-first-post.html')
+//     ]);  
+// });
+
+///* Wildcard variable - posts/test-post URL will return HTML with a 'test-post' body
+// Route::get('posts/{post}', function ($slug) { //? {} is wildcard 
+//     return $slug;
+// });
+
+///* Method 3 - putting the wildcard to use
+// Route::get('posts/{post}', function ($slug) { 
+//     $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html"); //? note: double-quotes needed here for variable
+    
+//     return view('post', [ 
+//         'post' => $post
+//     ]);  
+// });
+
+Route::get('posts/{post}', function ($slug) { 
+    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+    if (! file_exists($path)) {
+        //ddd('file does not exist'); //? ddd: dump, die & debug; dd: dump & die
+        //abort(404); //? throws HTTP error code
+        return redirect('/');
+    }
+
+    $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html"); //? double-quotes needed here
+    
+    return view('post', [ 
+        'post' => $post
+    ]);  
 });
+
