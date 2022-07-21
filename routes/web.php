@@ -54,9 +54,13 @@ Route::get('posts/{post}', function ($slug) {
         return redirect('/');
     }
 
-    $post = file_get_contents($path); 
-    
-    return view('post', [ 
+    //* cache for 5 seconds to avoid calling function (and accessing the filesystem for every HTTP GET. Shorthand for long times is member function now->addDays()), Weeks, Minutes, etc
+    $post = cache()->remember("posts.{$slug}", 5, function () use ($path) { //? 'use' keyword allows access to path variable inside the function
+        var_dump('file_get_contents'); // will show when file_get_contents is called
+        return file_get_contents($path); 
+    });
+
+        return view('post', [ 
         'post' => $post
     ]);  
 })->where('post', '[A-z_\-]+'); //? ->where enables Regex parameters (+ helper functions) to limit what URLs can be entered
