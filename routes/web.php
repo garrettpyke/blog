@@ -54,10 +54,11 @@ Route::get('posts/{post}', function ($slug) {
         return redirect('/');
     }
 
-    $post = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html"); //? double-quotes needed here
+    $post = file_get_contents($path); 
     
     return view('post', [ 
         'post' => $post
     ]);  
-});
+})->where('post', '[A-z_\-]+'); //? ->where enables Regex parameters (+ helper functions) to limit what URLs can be entered
+    //? helper functions are ->whereAlpha('post'), whereNumber, ...
 
