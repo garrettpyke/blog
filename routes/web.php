@@ -39,8 +39,9 @@ Route::get('/', function () {
      ///* Method 3: using Laravel Collections ///
     $posts = collect($files)
         ->map(function ($file) {
-            $document = YamlFrontMatter::parseFile($file);
-
+            return YamlFrontMatter::parseFile($file);
+        })
+        ->map(function ($document) {    
             return new Post(
                 $document->title,
                 $document->excerpt,
