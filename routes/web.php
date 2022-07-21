@@ -15,7 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+    $posts = Post::all();
+
+    // ddd($posts); //? Dumps the variable, showing it's an array
+    // ddd($posts[0]);
+    // ddd($posts[0]->getPathname()); //? good to know array method
+    // ddd((string)$posts[0]); //? gtn
+    // ddd($posts[0]->getContents()); //? gtn
+
+    return view('posts', [
+        'posts' => $posts
+    ]);
 });
 
 ///* Method 1, baby steps ///
@@ -69,24 +79,14 @@ Route::get('/', function () {
 //     //? helper functions are ->whereAlpha('post'), whereNumber, ...
 
 Route::get('posts/{post}', function ($slug) { 
-    // Find a post by its slug and pass it to a view called "post"
+// Find a post by its slug and pass it to a view called "post"
+
+    //return Post::find('my-first-post'); //* Just testing the Post.find method
+
     $post = Post::find($slug);
+    
     return view('post', [
         'post' => $post
     ]);
 
-    // $path = __DIR__ . "/../resources/posts/{$slug}.html";
-
-    // if (! file_exists($path)) {
-    //     return redirect('/');
-    // }
-
-    // //* cache for 5 seconds to avoid calling function (and accessing the filesystem for every HTTP GET. Shorthand for long times is member function now->addDays()), Weeks, Minutes, etc
-    // $post = cache()->remember("posts.{$slug}", 5, function () use ($path) { 
-    //     return file_get_contents($path); 
-    // });
-
-    //     return view('post', [ 
-    //     'post' => $post
-    // ]);  
 })->where('post', '[A-z_\-]+'); 
