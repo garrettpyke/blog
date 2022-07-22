@@ -6,9 +6,5 @@
 </head>
 
 <body>
-    <header>
-        @yield('banner')
-    </header>
-
-    @yield('content') <!-- refers back to layout.blade.php template (more Blade) -->
+    @yield('content') <!-- refers back to layout.blade.php layout (more Blade) -->
 </body>         
