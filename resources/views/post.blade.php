@@ -1,9 +1,9 @@
 <x-layout>
     <article>
-       <h1>{{ $post->title }}</h1>    
+       <h1>{!! $post->title !!}</h1> <!--GTN: !! allows any HTML to render  -->   
        
        <div>
-          {!! $post->body !!} <!--GTN: !! allows any HTML to render  -->
+          {!! $post->body !!} <!--//! ATT: !! make sure you have control of the data enclosed, as browser will execute  -->
        </div>
     </article>
 

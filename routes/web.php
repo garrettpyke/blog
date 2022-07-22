@@ -23,13 +23,11 @@ Route::get('/', function () {
 
 });
 
-Route::get('posts/{post}', function ($id) { 
-// Find a post by its slug and pass it to a view called "post"
-
-    $post = Post::find($id);
+//*GTN: this method uses Route-Model binding. Laravel matches name of argument with route. (Must be same name for this to work)
+Route::get('posts/{post}', function (Post $post) { 
+        
+        return view('post', [
+            'post' => $post
+        ]);
     
-    return view('post', [
-        'post' => $post
-    ]);
-
-});
+    });
