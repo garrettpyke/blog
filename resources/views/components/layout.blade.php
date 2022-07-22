@@ -6,5 +6,5 @@
 </head>
 
 <body>
-    @yield('content') <!-- refers back to layout.blade.php layout (more Blade) -->
+    {{ $slot }}
 </body>         
