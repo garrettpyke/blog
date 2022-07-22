@@ -2,8 +2,6 @@
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
-use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +15,7 @@ use Illuminate\Support\Facades\File;
 */
  
 Route::get('/', function () {
-    //$posts = Post::all();
+    $posts = Post::all();
 
     // ddd($posts); //? Dumps the variable, showing it's an array
     // ddd($posts[0]);
@@ -25,59 +23,7 @@ Route::get('/', function () {
     // ddd((string)$posts[0]); //? gtn
     // ddd($posts[0]->getContents()); //? gtn
 
-     ///* YAML metadata parser! ///
-    // $doc = YamlFrontMatter::parseFile(
-    //     resource_path('posts/my-fourth-post.html')
-    // );
-    // ddd($doc->matter()); // * YAML - all metadata
-    //ddd($doc->matter('title'));
-    //ddd($doc->title); //? cool shortcut
 
-
-    $files = File::files(resource_path("posts"));
- 
-     ///* Method 3: using Laravel Collections ///
-    $posts = collect($files)
-        ->map(function ($file) {
-            return YamlFrontMatter::parseFile($file);
-        })
-        ->map(function ($document) {    
-            return new Post(
-                $document->title,
-                $document->excerpt,
-                $document->date,
-                $document->body(),
-                $document->slug 
-            );             
-        });
-
-    ///* Method 2: mapping the array ///
-    // $posts = array_map(function ($file) {
-    //     $document = YamlFrontMatter::parseFile($file);
-
-    //     return new Post(
-    //         $document->title,
-    //         $document->excerpt,
-    //         $document->date,
-    //         $document->body(),
-    //         $document->slug 
-    //     ); 
-    // }, $files);
-
-    ///* Method 1: foreach ///
-    // $posts = [];
-    // foreach ($files as $file) {
-    //     $document = YamlFrontMatter::parseFile($file);
-
-    //     $posts[] = new Post(
-    //         $document->title,
-    //         $document->excerpt,
-    //         $document->date,
-    //         $document->body(),
-    //         $document->slug 
-    //     );
-    // }
-   
     return view('posts', [
         'posts' => $posts
     ]);
