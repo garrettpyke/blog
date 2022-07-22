@@ -17,22 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $posts = Post::all();
 
-    // ddd($posts); //? Dumps the variable, showing it's an array
-    // ddd($posts[0]);
-    // ddd($posts[0]->getPathname()); //? good to know array method
-    // ddd((string)$posts[0]); //? gtn
-    // ddd($posts[0]->getContents()); //? gtn
-
     return view('posts', [
         'posts' => $posts
     ]);
 
 });
 
-Route::get('posts/{post}', function ($slug) { 
+Route::get('posts/{post}', function ($id) { 
 // Find a post by its slug and pass it to a view called "post"
 
-    $post = Post::find($slug);
+    $post = Post::find($id);
     
     return view('post', [
         'post' => $post
