@@ -53,47 +53,32 @@ class Post
                 })
                 ->sortByDesc('date');
             });
-
-       ///* Method 2: mapping the array ///
-       // $files = File::files(resource_path("posts"));
-       // $posts = array_map(function ($file) {
-       //     $document = YamlFrontMatter::parseFile($file);
-   
-       //     return new Post(
-       //         $document->title,
-       //         $document->excerpt,
-       //         $document->date,
-       //         $document->body(),
-       //         $document->slug 
-       //     ); 
-       // }, $files);
-   
-       ///* Method 1: foreach ///
-       // $files = File::files(resource_path("posts"));
-       // $posts = [];
-       // foreach ($files as $file) {
-       //     $document = YamlFrontMatter::parseFile($file);
-   
-       //     $posts[] = new Post(
-       //         $document->title,
-       //         $document->excerpt,
-       //         $document->date,
-       //         $document->body(),
-       //         $document->slug 
-       //     );
-       // }
     }
 
     public static function find($slug)
     // Of all blog posts, find the one with a slug that matches the one requested.
     {
-        $posts = static::all();
+        //$posts = static::all();
 
-        return $posts->firstWhere('slug', $slug);
+        $post = static::all()->firstWhere('slug', $slug);
+
+        return $post;
 
         //?GTN cache for 20 min to avoid calling function (and accessing the filesystem for every HTTP GET. 
         //return cache()->remember("posts.{$slug}", 1200, function () use ($path) {
         //         return file_get_contents($path);
         //     });
+    }
+
+    public static function findOrFail($slug)
+    // For cases when we want to throw an exception if post not found
+    {
+        $post = static::find($slug);
+
+        if (! $post) {
+            throw new ModelNotFoundException();
+        }
+
+        return $post;
     }
 }
