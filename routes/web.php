@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 //*GTN: this method uses Route-Model binding. Laravel matches name of argument with route. (Must be same name for this to work)
-Route::get('posts/{post}', function (Post $post) { 
+Route::get('posts/{post:slug}', function (Post $post) { //behind the scenes looks like Post::where('slug', $post)->firstOrFail();
         
         return view('post', [
             'post' => $post

@@ -9,8 +9,17 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'excerpt', 'body']; // This attribute allows inserting all specified fields with one Eloquent operation. //! Protects against mass assignment vulnerability
+    //protected $fillable = ['category_id', 'slug', 'title', 'excerpt', 'body']; // This attribute allows inserting all specified fields with one Eloquent operation. //! Protects against mass assignment vulnerability
 
-    // protected $guarded = ['id'] Does the opposite of fillable. Everything else will be fillable
+    // protected $guarded = ['id'] Does the opposite of fillable. Everything else will be fillable. //*I prefer the fillable option.
+    protected $guarded = [];
 
+    ///* RELATIONSHIP is defined here ///
+    public function category()
+    {
+        // Relationship types - hasOne, hasMany, belongsTo, belongsToMany
+
+        return $this->belongsTo(Category::class);
+        // $post->category will be magically returned thru Eloquent (as if category were a property)
+    }
 }

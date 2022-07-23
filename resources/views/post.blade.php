@@ -1,9 +1,13 @@
 <x-layout>
     <article>
-       <h1>{!! $post->title !!}</h1> <!--GTN: !! allows any HTML to render  -->   
+       <h1>{!! $post->title !!}</h1> <!--GTN: !! allows any HTML to render //! ATT: !! make sure you have control of the data enclosed, as browser will execute any script-->  
+       
+        <p>
+            <a href="#">{{ $post->category->name }}</a>
+        </p>
        
        <div>
-          {!! $post->body !!} <!--//! ATT: !! make sure you have control of the data enclosed, as browser will execute  -->
+          <p>{{ $post->body }}</p>
        </div>
     </article>
 
