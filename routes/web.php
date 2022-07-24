@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $posts = Post::all();
+
+    //*GTN: handy helper function to see DB activity (see storage/logs/laravel.log)
+    // \Illuminate\Support\Facades\DB::listen(function ($query) {
+    //     logger($query->sql, $query->bindings);
+    // });
+
+    //*GTN: 'with' function resolves n+1 problem (see comment in posts view) and improves performance
+    $posts = Post::with('category')->get();
 
     return view('posts', [
         'posts' => $posts
