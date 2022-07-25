@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory; //*GTN: by convention, Laravel looks for Database\Factories\PostFactory - php artisan make:factory PostFactory
+    use HasFactory; //*GTK: by convention, Laravel looks for Database\Factories\PostFactory - php artisan make:factory PostFactory
 
     //protected $fillable = ['category_id', 'slug', 'title', 'excerpt', 'body']; // This attribute allows inserting all specified fields with one Eloquent operation. //! Protects against mass assignment vulnerability
 
@@ -15,7 +15,7 @@ class Post extends Model
     protected $guarded = [];
 
     ///* RELATIONSHIP is defined here ///
-    public function category()
+    public function category() //*GTK: Laravel assumes foreign key of category_id
     {
         // Relationship types - hasOne, hasMany, belongsTo, belongsToMany
 
@@ -23,8 +23,10 @@ class Post extends Model
         // $post->category will be magically returned thru Eloquent (as if category were a property)
     }
 
-    public function user()
+    //*GTK Rename from user() to author to improve developer-app relations :) 
+    //*GTK: belongsTo optional 2nd argument for DB field name
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
