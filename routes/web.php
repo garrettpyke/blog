@@ -44,7 +44,7 @@ Route::get('categories/{category:slug}', function (Category $category) {
 
     //*GTK: Use the load method when dealing with an existing instance of a model ($posts from / route in this case)
     return view('posts', [
-        'posts' => $category->posts->load(['category', 'author'])
+        'posts' => $category->posts
     ]);
 });
 
@@ -54,6 +54,6 @@ Route::get('authors/{author:user_name}', function (User $author) {
     // dd($author); //*GTK: attributes element shows all contents of variable
 
     return view('posts', [
-        'posts' => $author->posts->load(['category', 'author'])
+        'posts' => $author->posts
     ]);
 });
