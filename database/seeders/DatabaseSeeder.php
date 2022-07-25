@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'My Backpacking Post',
             'excerpt' => 'Excerpt for post',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-backpacking-post',                                                     'category_id' => 1
+            'slug' => 'my-backpacking-post'                                                    
         ]);
 
         Post::create([
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'My Family Post',
             'excerpt' => 'Excerpt for post',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-family-post',                                                     'category_id' => 1
+            'slug' => 'my-family-post'                                                     
         ]);
 
         Post::create([
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'My Work Post',
             'excerpt' => 'Excerpt for post',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-work-post',                                                     'category_id' => 1
+            'slug' => 'my-work-post'                                                     
         ]);
     }
 }
