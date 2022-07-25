@@ -22,4 +22,9 @@ class Post extends Model
         return $this->belongsTo(Category::class);
         // $post->category will be magically returned thru Eloquent (as if category were a property)
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

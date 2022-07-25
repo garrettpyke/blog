@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
             'category_id' => $hobbies->id,
             'title' => 'My Backpacking Post',
-            'excerpt' => 'Excerpt for post',
+            'excerpt' => 'Excerpt for backpacking post.',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
             'slug' => 'my-backpacking-post'                                                    
         ]);
@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
             'category_id' => $personal->id,
             'title' => 'My Family Post',
-            'excerpt' => 'Excerpt for post',
+            'excerpt' => 'Excerpt for family post.',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
             'slug' => 'my-family-post'                                                     
         ]);
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
             'category_id' => $work->id,
             'title' => 'My Work Post',
-            'excerpt' => 'Excerpt for post',
+            'excerpt' => 'Excerpt for work post.',
             'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
             'slug' => 'my-work-post'                                                     
         ]);

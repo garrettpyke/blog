@@ -13,7 +13,7 @@
                 </p>
 
                 <div>
-                    {{ $post->excerpt; }}
+                   <p>{{ $post->excerpt; }}</p>
                 </div>
             </article>
         @endforeach
