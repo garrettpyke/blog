@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory; //*GTN: by convention, Laravel looks for Database\Factories\PostFactory - php artisan make:factory PostFactory
 
     //protected $fillable = ['category_id', 'slug', 'title', 'excerpt', 'body']; // This attribute allows inserting all specified fields with one Eloquent operation. //! Protects against mass assignment vulnerability
 

@@ -18,61 +18,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //* Create 10 users
+        //* Create 10 users (no argument will create 1)
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         //* truncate will prevent duplication error for unique fields when not seeding fresh (Category name & slug) 
+        //* Running `..migrate:fresh --seed` will eliminate the need for this as tables are dropped 
         User::truncate();
         Category::truncate();
         Post::truncate();
 
-        $user = User::factory()->create();
-
-        $personal = Category::create([
-            'name' => 'Personal',
-            'slug' => 'personal'
+        // Create fake data for everything but the following
+        $user = User::factory()->create([
+            'name' => 'Rusty Shackleford'
         ]);
 
-        $hobbies = Category::create([
-            'name' => 'Hobbies',
-            'slug' => 'hobbies'
-        ]);
-
-        $work = Category::create([
-            'name' => 'Work',
-            'slug' => 'work'
-        ]);
-
-        Post::create([
-            'user_id' => $user->id,
-            'category_id' => $hobbies->id,
-            'title' => 'My Backpacking Post',
-            'excerpt' => 'Excerpt for backpacking post.',
-            'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-backpacking-post'                                                    
-        ]);
-
-        Post::create([
-            'user_id' => $user->id,
-            'category_id' => $personal->id,
-            'title' => 'My Family Post',
-            'excerpt' => 'Excerpt for family post.',
-            'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-family-post'                                                     
-        ]);
-
-        Post::create([
-            'user_id' => $user->id,
-            'category_id' => $work->id,
-            'title' => 'My Work Post',
-            'excerpt' => 'Excerpt for work post.',
-            'body' => 'Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet. Lorem ipsum dolar sit amet.',
-            'slug' => 'my-work-post'                                                     
+        // ...and associate that user with all posts
+        Post::factory(5)->create([
+            'user_id' => $user->id
         ]);
     }
 }
