@@ -14,6 +14,9 @@ class Post extends Model
     // protected $guarded = ['id'] Does the opposite of fillable. Everything else will be fillable. //*I prefer the fillable option.
     protected $guarded = [];
 
+
+    //protected $with = ['category', 'author'];  //TODO we can now eliminate the 'load' statements from routes; this eager-loads by default
+
     ///* RELATIONSHIP is defined here ///
     public function category() //*GTK: Laravel assumes foreign key of category_id
     {
@@ -24,7 +27,7 @@ class Post extends Model
     }
 
     //*GTK Rename from user() to author to improve developer-app relations :) 
-    //*GTK: belongsTo optional 2nd argument for DB field name
+    //*...need optional 2nd argument for DB field name 
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
