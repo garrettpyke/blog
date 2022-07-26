@@ -15,7 +15,7 @@ class Post extends Model
     protected $guarded = [];
 
 
-    protected $with = ['category', 'author'];  //! to eliminate the 'load' statements from routes, this eager-loads by default
+    protected $with = ['category', 'author'];  //! to eliminate the 'load' statements from routes, this eager-loads by default. (Do only when relationship is needed)
 
     ///* RELATIONSHIP is defined here ///
     public function category() //*GTK: Laravel assumes foreign key of category_id
