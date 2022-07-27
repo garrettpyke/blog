@@ -18,10 +18,11 @@
 
             {{-- *GTN: this is Alpine.js at work. Script src in layout --}}
             <div x-data="{ show: false }" @click.away="show = false">
-            {{-- We can execute any JS we want on a click event etc --}}    
-                <button @click="show = !show" class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
-                    
-                    {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories'}}
+                {{-- We can execute any JS we want on a click event etc --}}
+                <button @click="show = !show"
+                    class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
+
+                    {{ isset($currentCategory) ? ucwords($currentCategory->name) : 'Categories' }}
                     {{-- This is just the arrow --}}
                     <svg class="transform -rotate-90 absolute pointer-events-none" style="right: 12px;" width="22"
                         height="22" viewBox="0 0 22 22">
@@ -35,10 +36,15 @@
                     </svg>
                 </button>
 
-                <div x-show="show" class="py-2 absolute bg-gray-100 mt-2 rounded-xl w-full z-50" style="display: none">
+                <div x-show="show" class="py-2 absolute bg-gray-100 mt-2 rounded-xl w-full z-50" style="display: none"> {{-- display none to make a refresh prettier --}}
+                    <a href="/"
+                        class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-300">All</a>
                     @foreach ($categories as $category)
                         <a href="/categories/{{ $category->slug }}"
-                            class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-300">{{ ucwords($category->name)}}</a>
+                        class="block text-left px-3 text-sm leading-6 hover:bg-blue-500 hover:text-white focus:bg-blue-300
+                        {{ isset($currentCategory) && $currentCategory->id === $category->id ? ' bg-blue-500 text-white' : ''}}
+                        "
+                        >{{ ucwords($category->name) }}</a>
                     @endforeach
                 </div>
             </div>
