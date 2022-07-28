@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostsController;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
@@ -16,36 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $posts = Post::latest();
+Route::get('/', [PostsController::class, 'index'])->name('home');
+//*GTK: This is a named route
 
-    if (request('search')) {
-       $posts
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('title', 'like', '%' . request('search') . '%');
-    }
-    
-
-    //*GTK: 'with' function = Eager loading - Here it resolves n+1 problem (see comment in posts view) and improves performance 
-    //*GTK: 'latest' adds an sql ORDER BY 
-    // $posts = Post::latest()->with('category', 'author')->get();
-    $categories = Category::all();
-
-    return view('posts', [
-        // get() means execute query - implies query is completely built
-        'posts' => $posts->get(),
-        'categories' => $categories
-    ]);
-})->name('home');
-//*GTN: This is a named route
-
-//*GTK: this method uses Route-Model binding. Laravel matches name of argument with route. (Must be same name for this to work)
-Route::get('posts/{post:slug}', function (Post $post) { //behind the scenes looks like Post::where('slug', $post)->firstOrFail();
-
-    return view('post', [
-        'post' => $post
-    ]);
-});
+Route::get('posts/{post:slug}', [PostsController::class, 'show']);
 
 Route::get('categories/{category:slug}', function (Category $category) {
 

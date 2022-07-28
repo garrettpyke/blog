@@ -15,7 +15,18 @@ class Post extends Model
     protected $guarded = [];
 
 
-    protected $with = ['category', 'author'];  //! to eliminate the 'load' statements from routes, this eager-loads by default. (Do only when relationship is needed)
+    protected $with = ['category', 'author'];  //* to eliminate the 'load' statements from routes, this eager-loads by default. (Do only when relationship is needed)
+
+    //* This is a Dedicated Query-scope - used to isolate messier queries
+    public function scopeFilter($query, array $filters) // Post::newQuery()->filter() - omit scope when calling
+    {
+        //TODO ?? is PHP8 null-safe operator
+        if ($filters['search'] ?? false) {
+            $query
+                 ->where('title', 'like', '%' . request('search') . '%')
+                 ->orWhere('body', 'like', '%' . request('search') . '%');
+        }
+    }
 
     ///* RELATIONSHIP is defined here ///
     public function category() //*GTK: Laravel assumes foreign key of category_id
