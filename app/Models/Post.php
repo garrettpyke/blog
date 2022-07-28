@@ -22,17 +22,10 @@ class Post extends Model
     public function scopeFilter($query, array $filters) // Post::newQuery()->filter() - omit scope when calling
     {
         //TODO ?? is PHP8 null-safe operator
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query
-                ->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%');
-
-        });
-        // if ($filters['search'] ?? false) {
-        //     $query
-        //          ->where('title', 'like', '%' . request('search') . '%')
-        //          ->orWhere('body', 'like', '%' . request('search') . '%');
-        // }
+        $query->when($filters['search'] ?? false, fn ($query, $search) =>
+        $query
+            ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('body', 'like', '%' . $search . '%'));
     }
 
     ///* RELATIONSHIP is defined here ///
