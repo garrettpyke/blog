@@ -19,8 +19,8 @@ class PostsController extends Controller
 
                         // this is what is passed to the query scope (2nd argument in Post->scopeFilter)
             'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
-            'categories' => Category::all(),
-            'currentCategory' => Category::firstWhere('slug', request('category'))
+            // 'categories' => Category::all(), //* Now handled by the CategoryDropdown view
+            // 'currentCategory' => Category::firstWhere('slug', request('category')) //* Now handled by the CategoryDropdown view
         ]);
     }
 
