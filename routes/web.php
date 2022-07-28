@@ -29,7 +29,8 @@ Route::get('/', function () {
         'posts' => $posts,
         'categories' => $categories
     ]);
-});
+})->name('home');
+//*GTN: This is a named route
 
 //*GTK: this method uses Route-Model binding. Laravel matches name of argument with route. (Must be same name for this to work)
 Route::get('posts/{post:slug}', function (Post $post) { //behind the scenes looks like Post::where('slug', $post)->firstOrFail();
@@ -47,7 +48,7 @@ Route::get('categories/{category:slug}', function (Category $category) {
         'currentCategory' => $category, 
         'categories' => Category::all()
     ]);
-});
+})->name('category');
 
 // No slug needed here. 
 Route::get('authors/{author:user_name}', function (User $author) {
