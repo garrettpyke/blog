@@ -17,16 +17,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $posts = Post::latest();
 
+    if (request('search')) {
+       $posts
+            ->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('title', 'like', '%' . request('search') . '%');
+    }
     
 
     //*GTK: 'with' function = Eager loading - Here it resolves n+1 problem (see comment in posts view) and improves performance 
     //*GTK: 'latest' adds an sql ORDER BY 
-    $posts = Post::latest()->with('category', 'author')->get();
+    // $posts = Post::latest()->with('category', 'author')->get();
     $categories = Category::all();
 
     return view('posts', [
-        'posts' => $posts,
+        // get() means execute query - implies query is completely built
+        'posts' => $posts->get(),
         'categories' => $categories
     ]);
 })->name('home');
