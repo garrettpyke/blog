@@ -21,7 +21,7 @@
                {{-- *GTK: This refers back to the named route. This is a good method to set the currently active link --}}
 
                 @foreach ($categories as $category)
-                    <x-dropdown-item href="/categories/{{ $category->slug }}"
+                    <x-dropdown-item href="/?category={{ $category->slug }}"
                         :active="request()->is('categories/' . $category->slug)"
                     >
                         {{ ucwords($category->name) }}

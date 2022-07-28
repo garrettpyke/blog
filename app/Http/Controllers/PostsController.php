@@ -18,8 +18,9 @@ class PostsController extends Controller
             //* filter is calling the dedicated query scope inPost model
 
                         // this is what is passed to the query scope (2nd argument in Post->scopeFilter)
-            'posts' => Post::latest()->filter(request(['search']))->get(),
-            'categories' => Category::all()
+            'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
+            'categories' => Category::all(),
+            'currentCategory' => Category::firstWhere('slug', request('category'))
         ]);
     }
 

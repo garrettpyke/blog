@@ -10,9 +10,6 @@ class Post extends Model
 {
     use HasFactory; //*GTK: by convention, Laravel looks for Database\Factories\PostFactory - php artisan make:factory PostFactory
 
-    //protected $fillable = ['category_id', 'slug', 'title', 'excerpt', 'body']; // This attribute allows inserting all specified fields with one Eloquent operation. //! Protects against mass assignment vulnerability
-
-    // protected $guarded = ['id'] Does the opposite of fillable. Everything else will be fillable. //*I prefer the fillable option.
     protected $guarded = [];
 
 
@@ -23,9 +20,25 @@ class Post extends Model
     {
         //TODO ?? is PHP8 null-safe operator
         $query->when($filters['search'] ?? false, fn ($query, $search) =>
-        $query
-            ->where('title', 'like', '%' . $search . '%')
-            ->orWhere('body', 'like', '%' . $search . '%'));
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%'));
+
+        //*GTK: This query allows http://127.0.0.1:8000/?category=ut-tenetur-id-provident-fugit-non-cupiditate-facere
+        //* ...and http://127.0.0.1:8000/?search=qui&category=omnis
+        $query->when($filters['category'] ?? false, fn ($query, $category) =>
+            $query->whereHas('category', fn ($query) => 
+                $query->where('slug', $category)
+            )
+        );
+
+            // $query    
+                // ->whereExists(fn($query) => 
+                //     $query->from('categories')
+                //         ->whereColumn('categories.id', 'posts.category_id')
+                //         //* whereColumn because category_id is not a string!
+                //         ->where('categories.slug', $category))
+            // );
     }
 
     ///* RELATIONSHIP is defined here ///
