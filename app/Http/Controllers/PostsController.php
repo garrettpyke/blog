@@ -16,6 +16,8 @@ class PostsController extends Controller
         return view('posts', [
             // get() means execute query - implies query is completely built
             //* filter is calling the dedicated query scope inPost model
+
+                        // this is what is passed to the query scope (2nd argument in Post->scopeFilter)
             'posts' => Post::latest()->filter(request(['search']))->get(),
             'categories' => Category::all()
         ]);

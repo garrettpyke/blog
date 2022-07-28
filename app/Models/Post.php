@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder; // allows when method for conditional querying - apply the callback's query changes if the given "value" is true (see scopeQuery function)
 
 class Post extends Model
 {
@@ -21,11 +22,17 @@ class Post extends Model
     public function scopeFilter($query, array $filters) // Post::newQuery()->filter() - omit scope when calling
     {
         //TODO ?? is PHP8 null-safe operator
-        if ($filters['search'] ?? false) {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
             $query
-                 ->where('title', 'like', '%' . request('search') . '%')
-                 ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%');
+
+        });
+        // if ($filters['search'] ?? false) {
+        //     $query
+        //          ->where('title', 'like', '%' . request('search') . '%')
+        //          ->orWhere('body', 'like', '%' . request('search') . '%');
+        // }
     }
 
     ///* RELATIONSHIP is defined here ///
